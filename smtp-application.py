@@ -67,7 +67,7 @@ class emailWindow:
         self.E5 = Entry(abc, bd=5, show='*')
         self.E5.pack()
 
-        pw_submit = Button(abc, text='Submit', command=self.send, height=2, width=10)
+        pw_submit = Button(abc, text='Submit', command=self.submit, height=2, width=10)
         pw_submit.pack()
 
         pw_cancel = Button(abc, text='Cancel', height=2, width=10)
@@ -77,17 +77,36 @@ class emailWindow:
         #self.newWindow = Toplevel(self.master)
         #w = pw_window(self.newWindow)
 
-    def send(self):
+    def submit(self):
+        # initialize message info
+        from_email = 'cjbombino@gmail.com'
+        to_email = from_email
+        password = auth.app_password
+        subject = 'Test'
+        body = 'Hello World'
+
         to_email = self.E1.get()
         from_email = self.E2.get()
         subject = self.E3.get()
         body = self.E4.get('1.0', END)
-        pw = self.E5.get()
-        print('To: ' + to_email)
-        print('From: ' + from_email)
-        print('Subject: ' + subject)
-        print('Body: ' + body)
-        print('Password: ' + pw)
+        password = self.E5.get()
+
+        # xreate SMTP server and login
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.ehlo()
+        server.starttls()
+        server.login(from_email, password)
+
+        # Create MIMEText messsage object
+        msg = MIMEText(body)
+        msg['Subject'] = subject
+        msg['From'] = from_email
+        msg['To'] = to_email
+
+        # Send mail and quit server
+        server.sendmail(from_email, to_email, msg.as_string())
+        server.quit()
+
 
 root = Tk()
 w = emailWindow(root)
