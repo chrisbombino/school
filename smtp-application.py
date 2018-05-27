@@ -38,15 +38,33 @@ class emailWindow:
     # input validation function
     def validate(self):
         # regex to check email format,
-        if re.match(r'\w+@gmail\.com', self.E1.get()) and re.match(r'\w+@gmail\.com', self.E2.get()) and re.match(r'\w+', self.E3.get()) and re.match(r'.*', self.E4.get('1.0', END)):
+        if re.match(r'\w+@gmail\.com', self.E1.get()) and re.match(r'\w+@gmail\.com', self.E2.get()) and re.match(r'\w+', self.E3.get()) and re.match(r'\w+', self.E4.get('1.0', END)):
             self.open_pw()
         else:
-            self.fail_window()
+            fails = []
+            if re.match(r'\w+@gmail\.com', self.E1.get()):
+                pass
+            else:
+                fails.append('To Email')
+            if re.match(r'\w+@gmail\.com', self.E2.get()):
+                pass
+            else:
+                fails.append('From Email')
+            if re.match(r'\w+', self.E3.get()):
+                pass
+            else:
+                fails.append('Subject')
+            if re.match(r'\w+', self.E4.get('1.0', END)):
+                pass
+            else:
+                fails.append('Body')
+            self.fail_window(fails)
 
-    def fail_window(self):
+    def fail_window(self, fail_arr):
         window =Tk()
-
-        label1 = Label(window, text='Please enter valid information')
+        print(fail_arr)
+        str = ' ,'.join(fail_arr)
+        label1 = Label(window, text='Please correct the following information: ' + str)
         label1.pack()
 
         b = Button(window, text='Close', command=window.quit())
