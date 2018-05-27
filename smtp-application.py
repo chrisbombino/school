@@ -24,12 +24,20 @@ tk_body.pack()
 E4 = Entry(top, bd=5)
 E4.pack()
 
-top.mainloop()
+send_button = Button(top, text='Send')
+send_button.pack()
+#top.mainloop()
 
 pw_window = Tk()
 pw_label = Label(pw_window, text='Password:')
-E5 = Entry(pw_window)
+pw_label.pack()
+E5 = Entry(pw_window, bd=5)
+E5.pack()
 
+pw_submit = Button(pw_window, text='Submit')
+pw_submit.pack()
+pw_cancel = Button(pw_window, text='Cancel')
+pw_cancel.pack()
 pw_window.mainloop()
 '''
 # initialize message info
