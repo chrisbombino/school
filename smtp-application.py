@@ -1,16 +1,36 @@
 import smtplib
 import auth
 from email.mime.text import MIMEText
-import tkinter
+from tkinter import *
 
-top = tkinter.Tk()
-tk_user = Label(top, text='To Email')
-tk_user.pack(side = LEFT)
+top = Tk()
+tk_to = Label(top, text='To:')
+tk_to.pack()
 E1 = Entry(top, bd=5)
-E1.pack(side-RIGHT)
+E1.pack()
+
+tk_from = Label(top, text='From:')
+tk_from.pack()
+E2 = Entry(top, bd=5)
+E2.pack()
+
+tk_subject = Label(top, text='Subject:')
+tk_subject.pack()
+E3 = Entry(top, bd=5)
+E3.pack()
+
+tk_body = Label(top, text='Body:')
+tk_body.pack()
+E4 = Entry(top, bd=5)
+E4.pack()
 
 top.mainloop()
 
+pw_window = Tk()
+pw_label = Label(pw_window, text='Password:')
+E5 = Entry(pw_window)
+
+pw_window.mainloop()
 '''
 # initialize message info
 from_email = 'cjbombino@gmail.com'
