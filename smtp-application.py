@@ -4,27 +4,6 @@ from email.mime.text import MIMEText
 from tkinter import *
 
 
-class pw_window():
-    def __init__(self, master):
-        self.master = master
-        frame = Frame(master)
-
-        self.pw_label = Label(frame, text='Password:', height=2)
-        self.pw_label.pack()
-        self.E5 = Entry(frame, bd=5, show='*')
-        self.E5.pack()
-
-        self.pw_submit = Button(frame, text='Submit', command=self.submit, height=2, width=10)
-        self.pw_submit.pack()
-
-        self.pw_cancel = Button(frame, text='Cancel', command=frame.quit, height=2, width=10)
-        self.pw_cancel.pack()
-
-        frame.pack()
-
-    def submit(self):
-        print(self.abc)
-
 class emailWindow:
     def __init__(self, master):
         self.master = master
@@ -33,17 +12,17 @@ class emailWindow:
 
         self.tk_to = Label(frame, text='To:')
         self.tk_to.pack()
-        self.E1 = Entry(frame, bd=5)
+        self.E1 = Entry(frame, bd=5, width=40)
         self.E1.pack()
 
         self.tk_from = Label(frame, text='From:')
         self.tk_from.pack()
-        self.E2 = Entry(frame, bd=5)
+        self.E2 = Entry(frame, bd=5, width=40)
         self.E2.pack()
 
         self.tk_subject = Label(frame, text='Subject:')
         self.tk_subject.pack()
-        self.E3 = Entry(frame, bd=5)
+        self.E3 = Entry(frame, bd=5, width=60)
         self.E3.pack()
 
         self.tk_body = Label(frame, text='Body:')
@@ -64,13 +43,13 @@ class emailWindow:
         pw_label = Label(abc, text='Password:', height=2)
         pw_label.pack()
 
-        self.E5 = Entry(abc, bd=5, show='*')
+        self.E5 = Entry(abc, bd=5, show='*', width=30)
         self.E5.pack()
 
         pw_submit = Button(abc, text='Submit', command=self.submit, height=2, width=10)
         pw_submit.pack()
 
-        pw_cancel = Button(abc, text='Cancel', height=2, width=10)
+        pw_cancel = Button(abc, text='Cancel', command=quit, height=2, width=10)
         pw_cancel.pack()
 
         abc.mainloop()
@@ -106,6 +85,9 @@ class emailWindow:
         # Send mail and quit server
         server.sendmail(from_email, to_email, msg.as_string())
         server.quit()
+
+    def quit(self):
+        self.destroy()
 
 
 root = Tk()
