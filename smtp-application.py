@@ -2,9 +2,11 @@ import smtplib
 import auth
 from email.mime.text import MIMEText
 from tkinter import *
+import re
 
 
 class emailWindow:
+    # initialize window with labels, text fields and buttons
     def __init__(self, master):
         self.master = master
         frame = Frame(master)
@@ -30,13 +32,29 @@ class emailWindow:
         self.E4 = Text(frame, bd=5, height=10)
         self.E4.pack()
 
-        self.send_button = Button(frame, text='Send', command=self.open_pw, height=2, padx=50)
+        self.send_button = Button(frame, text='Send', command=self.validate, height=2, padx=50)
         self.send_button.pack()
 
-    def get_msg_info(self):
-        to = self.E1.get()
-        print(to)
+    # input validation function
+    def validate(self):
+        # regex to check email format,
+        if re.match(r'\w+@gmail\.com', self.E1.get()) and re.match(r'\w+@gmail\.com', self.E2.get()) and re.match(r'\w+', self.E3.get()) and re.match(r'.*', self.E4.get('1.0', END)):
+            self.open_pw()
+        else:
+            self.fail_window()
 
+    def fail_window(self):
+        window =Tk()
+
+        label1 = Label(window, text='Please enter valid information')
+        label1.pack()
+
+        b = Button(window, text='Close', command=window.quit())
+        b.pack()
+
+        window.mainloop()
+
+    # open the password window with text field and buttons
     def open_pw(self):
         abc = Tk()
 
@@ -56,21 +74,16 @@ class emailWindow:
         #self.newWindow = Toplevel(self.master)
         #w = pw_window(self.newWindow)
 
+    # submit the data to be processed by the server
     def submit(self):
         # initialize message info
-        from_email = 'cjbombino@gmail.com'
-        to_email = from_email
-        password = auth.app_password
-        subject = 'Test'
-        body = 'Hello World'
-
         to_email = self.E1.get()
         from_email = self.E2.get()
         subject = self.E3.get()
         body = self.E4.get('1.0', END)
         password = self.E5.get()
 
-        # xreate SMTP server and login
+        # create SMTP server and login
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.ehlo()
         server.starttls()
@@ -86,6 +99,7 @@ class emailWindow:
         server.sendmail(from_email, to_email, msg.as_string())
         server.quit()
 
+    # close the password window
     def quit(self):
         self.destroy()
 
@@ -93,28 +107,3 @@ class emailWindow:
 root = Tk()
 w = emailWindow(root)
 root.mainloop()
-
-'''
-# initialize message info
-from_email = 'cjbombino@gmail.com'
-to_email = from_email
-password = auth.app_password
-subject = 'Test'
-body = 'Hello World'
-
-# xreate SMTP server and login
-server = smtplib.SMTP('smtp.gmail.com:587')
-server.ehlo()
-server.starttls()
-server.login(from_email, password)
-
-# Create MIMEText messsage object
-msg = MIMEText(body)
-msg['Subject'] = subject
-msg['From'] = from_email
-msg['To'] = to_email
-
-# Send mail and quit server
-server.sendmail(from_email, to_email, msg.as_string())
-server.quit()
-'''
