@@ -3,67 +3,97 @@ import auth
 from email.mime.text import MIMEText
 from tkinter import *
 
-def close_pw_window():
-    pw_window.destroy()
 
-def send():
-    print('To: ' + to_field.get())
-    print('From: ' + from_field.get())
-    print('Subject: ' + subject_field.get())
+class pw_window():
+    def __init__(self, master):
+        self.master = master
+        frame = Frame(master)
 
-def open_pw_window():
-    top.destroy()
-    pw_window.mainloop()
+        self.pw_label = Label(frame, text='Password:', height=2)
+        self.pw_label.pack()
+        self.E5 = Entry(frame, bd=5, show='*')
+        self.E5.pack()
 
-top = Tk()
-top.title("Mail Application")
-#top.geometry("640x640+0+0")
+        self.pw_submit = Button(frame, text='Submit', command=self.submit, height=2, width=10)
+        self.pw_submit.pack()
 
-tk_to = Label(top, text='To:')
-tk_to.pack()
-to_field = StringVar()
-E1 = Entry(top, bd=5, textvariable=to_field)
-E1.pack()
+        self.pw_cancel = Button(frame, text='Cancel', command=frame.quit, height=2, width=10)
+        self.pw_cancel.pack()
 
-tk_from = Label(top, text='From:')
-tk_from.pack()
-from_field = StringVar()
-E2 = Entry(top, bd=5, textvariable=from_field)
-E2.pack()
+        frame.pack()
 
-tk_subject = Label(top, text='Subject:')
-tk_subject.pack()
-subject_field = StringVar()
-E3 = Entry(top, bd=5, textvariable=subject_field)
-E3.pack()
+    def submit(self):
+        print(self.abc)
 
-tk_body = Label(top, text='Body:')
-tk_body.pack()
-E4 = Text(top, bd=5, height=10)
-E4.pack()
+class emailWindow:
+    def __init__(self, master):
+        self.master = master
+        frame = Frame(master)
+        frame.pack()
 
-send_button = Button(top, text='Send', command=open_pw_window, height=2, padx=50)
-send_button.pack()
-top.mainloop()
+        self.tk_to = Label(frame, text='To:')
+        self.tk_to.pack()
+        self.E1 = Entry(frame, bd=5)
+        self.E1.pack()
 
-pw_window = Tk()
+        self.tk_from = Label(frame, text='From:')
+        self.tk_from.pack()
+        self.E2 = Entry(frame, bd=5)
+        self.E2.pack()
 
-pw_label = Label(pw_window, text='Password:', height=2)
-pw_label.pack()
-E5 = Entry(pw_window, bd=5, show='*')
-E5.pack()
+        self.tk_subject = Label(frame, text='Subject:')
+        self.tk_subject.pack()
+        self.E3 = Entry(frame, bd=5)
+        self.E3.pack()
 
-pw_submit = Button(pw_window, text='Submit', height=2, width=10)
-pw_submit.pack()
+        self.tk_body = Label(frame, text='Body:')
+        self.tk_body.pack()
+        self.E4 = Text(frame, bd=5, height=10)
+        self.E4.pack()
 
-pw_cancel = Button(pw_window, text='Cancel', command=close_pw_window, height=2, width=10)
-pw_cancel.pack()
+        self.send_button = Button(frame, text='Send', command=self.open_pw, height=2, padx=50)
+        self.send_button.pack()
+
+    def get_msg_info(self):
+        to = self.E1.get()
+        print(to)
+
+    def open_pw(self):
+        abc = Tk()
+
+        pw_label = Label(abc, text='Password:', height=2)
+        pw_label.pack()
+
+        self.E5 = Entry(abc, bd=5, show='*')
+        self.E5.pack()
+
+        pw_submit = Button(abc, text='Submit', command=self.send, height=2, width=10)
+        pw_submit.pack()
+
+        pw_cancel = Button(abc, text='Cancel', height=2, width=10)
+        pw_cancel.pack()
+
+        abc.mainloop()
+        #self.newWindow = Toplevel(self.master)
+        #w = pw_window(self.newWindow)
+
+    def send(self):
+        to_email = self.E1.get()
+        from_email = self.E2.get()
+        subject = self.E3.get()
+        body = self.E4.get('1.0', END)
+        pw = self.E5.get()
+        print('To: ' + to_email)
+        print('From: ' + from_email)
+        print('Subject: ' + subject)
+        print('Body: ' + body)
+        print('Password: ' + pw)
+
+root = Tk()
+w = emailWindow(root)
+root.mainloop()
 
 '''
-
-
-
-
 # initialize message info
 from_email = 'cjbombino@gmail.com'
 to_email = from_email
