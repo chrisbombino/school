@@ -62,12 +62,11 @@ class emailWindow:
     # if validation fails, this window opens
     def fail_window(self, fail_arr):
         window =Tk()
-        print(fail_arr)
         str = ' ,'.join(fail_arr)
         label1 = Label(window, text='Please correct the following information: ' + str)
         label1.pack()
 
-        b = Button(window, text='Close', command=window.quit())
+        b = Button(window, text='Close', command=quit)
         b.pack()
 
         window.mainloop()
@@ -114,13 +113,13 @@ class emailWindow:
         msg['To'] = to_email
 
         # Send mail and quit server
-        #server.sendmail(from_email, to_email, msg.as_string())
+        server.sendmail(from_email, to_email, msg.as_string())
         server.quit()
-        frame.quit()
+        self.quit()
 
     # close the password window
     def quit(self):
-        self.destroy()
+        self.master.destroy()
 
 # create initial window with emailWindow class properties
 root = Tk()
