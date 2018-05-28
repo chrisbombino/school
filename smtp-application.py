@@ -35,18 +35,18 @@ class emailWindow:
         self.send_button = Button(frame, text='Send', command=self.validate, height=2, padx=50)
         self.send_button.pack()
 
-    # input validation function
+    # function for validating user input
     def validate(self):
         # regex to check email format,
-        if re.match(r'\w+@gmail\.com', self.E1.get()) and re.match(r'\w+@gmail\.com', self.E2.get()) and re.match(r'\w+', self.E3.get()) and re.match(r'\w+', self.E4.get('1.0', END)):
+        if re.match(r'\w+@\w+\.com', self.E1.get()) and re.match(r'\w+@gmail\.com', self.E2.get()) and re.match(r'\w+', self.E3.get()) and re.match(r'\w+', self.E4.get('1.0', END)):
             self.open_pw()
         else:
             fails = []
-            if re.match(r'\w+@gmail\.com', self.E1.get()):
+            if re.match(r'^\w+@\w+\.\w{1,4}$', self.E1.get()):
                 pass
             else:
                 fails.append('To Email')
-            if re.match(r'\w+@gmail\.com', self.E2.get()):
+            if re.match(r'^\w+@gmail\.com$', self.E2.get()):
                 pass
             else:
                 fails.append('From Email')
@@ -59,7 +59,7 @@ class emailWindow:
             else:
                 fails.append('Body')
             self.fail_window(fails)
-
+    # if validation fails, this window opens
     def fail_window(self, fail_arr):
         window =Tk()
         print(fail_arr)
@@ -114,14 +114,15 @@ class emailWindow:
         msg['To'] = to_email
 
         # Send mail and quit server
-        server.sendmail(from_email, to_email, msg.as_string())
+        #server.sendmail(from_email, to_email, msg.as_string())
         server.quit()
+        frame.quit()
 
     # close the password window
     def quit(self):
         self.destroy()
 
-
+# create initial window with emailWindow class properties
 root = Tk()
 w = emailWindow(root)
 root.mainloop()
